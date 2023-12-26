@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^11.1.0",
-    "figlet": "^1.7.0"
+    "figlet": "^1.7.0",
+    "neo-blessed": "^0.2.0"
   },
   "devDependencies": {
+    "@types/blessed": "^0.1.25",
     "@types/figlet": "^1.5.8",
     "@types/node": "^20.10.5",
     "typescript": "^5.3.3"
