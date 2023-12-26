@@ -11,7 +11,9 @@ console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
 program
 	.version('1.0.0')
 	.description(
-		chalk.green('Code Snippet Manger: CLI for managing code snippets'),
+		chalk.green(
+			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal currently supports JavaScript, TypeScript and Python',
+		),
 	)
 	.option('-s, --save <snippet-title>.ts | py | js', 'Save a code snippet')
 	.option('-l, --list', 'List all code snippets')
