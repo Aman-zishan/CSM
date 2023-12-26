@@ -1,4 +1,4 @@
-## CSM : Code Snippet Manager
+## CSM : Code Snippet Manager (under development)
 
 <div align="center">
 <img width="789" alt="Screenshot 2023-12-26 at 11 15 16 PM" src="https://github.com/Aman-zishan/CSM/assets/55238388/8fb219c4-df40-4110-bae5-e9feb3f9eba6">
