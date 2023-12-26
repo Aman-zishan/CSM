@@ -5,6 +5,7 @@ import listSnippets from './core/list-interface';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
+import chalk from 'chalk';
 
 hljs.registerLanguage('javascript', javascript);
 
@@ -13,12 +14,14 @@ hljs.registerLanguage('python', python);
 
 const program = new Command();
 
-console.log(figlet.textSync('CSM', 'Standard'));
+console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
 
 program
 	.version('1.0.0')
-	.description('Code Snippet Manger: CLI for managing code snippets')
-	.option('-s, --save <snippiet-title>.ts | py | js', 'Save a code snippet')
+	.description(
+		chalk.green('Code Snippet Manger: CLI for managing code snippets'),
+	)
+	.option('-s, --save <snippet-title>.ts | py | js', 'Save a code snippet')
 	.option('-l, --list', 'List all code snippets')
 	.parse(process.argv);
 

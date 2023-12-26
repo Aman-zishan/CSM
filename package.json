@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
     "cli-highlight": "^2.1.11",
     "commander": "^11.1.0",
     "figlet": "^1.7.0",

@@ -1,6 +1,7 @@
 import * as blessed from 'neo-blessed';
 import loadSnippets from './get-snippets';
 import highlight from 'cli-highlight';
+import chalk from 'chalk';
 // Call to load the snippets.
 export default function listSnippets() {
 	// Create a screen object.
@@ -9,17 +10,54 @@ export default function listSnippets() {
 		title: 'Code Snippet Manager',
 	});
 
+	const titleBar = blessed.textarea({
+		bg: '#D3D3D3',
+		parent: screen,
+		top: 0,
+		left: 0,
+		width: '20%',
+		height: '10%',
+		padding: {
+			left: 1,
+		},
+	});
+
+	const EditorTitleBar = blessed.textarea({
+		bg: '#D3D3D3',
+		parent: screen,
+		top: 0,
+		left: '30%',
+		width: '30%',
+		height: '10%',
+		padding: {
+			left: 1,
+		},
+	});
+
+	const footer = blessed.textarea({
+		parent: screen,
+		fg: '#36454F',
+		bottom: 0,
+		left: 0,
+		width: '100%',
+		height: '5%',
+		padding: {
+			left: 1,
+		},
+	});
+
 	// Create a box for the left panel (snippet list).
 	const list = blessed.list({
 		parent: screen,
 		width: '30%',
-		height: '100%',
+		height: '90%',
 		left: '0',
-		top: '0',
+		top: '5%',
 		align: 'left',
-		fg: 'blue',
-		border: {
-			type: 'line',
+		fg: '#36454F',
+		padding: {
+			left: 1,
+			top: 2,
 		},
 		keys: true,
 		mouse: true,
@@ -31,13 +69,14 @@ export default function listSnippets() {
 	const editor = blessed.textarea({
 		parent: screen,
 		width: '70%',
-		height: '100%',
+		height: '90%',
 		left: '30%',
-		top: '0',
+		top: '5%',
 		align: 'left',
 		fg: 'white',
-		border: {
-			type: 'line',
+		padding: {
+			left: 1,
+			top: 2,
 		},
 		mouse: true,
 		keys: true,
@@ -45,8 +84,12 @@ export default function listSnippets() {
 	});
 
 	// Append our box to the screen.
+
+	screen.append(titleBar);
+	screen.append(EditorTitleBar);
 	screen.append(list);
 	screen.append(editor);
+	screen.append(footer);
 
 	// Focus on the snippet list to allow for navigation.
 	list.focus();
@@ -56,14 +99,30 @@ export default function listSnippets() {
 		return process.exit(0);
 	});
 
-	// Render the screen.
-	screen.render();
-
 	// Load the snippets into the list.
 
 	const snippets = loadSnippets();
 	const titles = snippets.map((snippet: Snippet) => snippet.title);
 	list.setItems(titles);
+	titleBar.setValue(chalk.hex('#36454F').bold('Snippets'));
+	EditorTitleBar.setValue(chalk.hex('#36454F').bold('Snippet Code Viewer'));
+	footer.setValue(
+		chalk.hex('#36454F').bold('q') +
+			' ' +
+			chalk.hex('#36454F')('quit') +
+			'\t' +
+			chalk.hex('#36454F').bold('⏎') +
+			' ' +
+			chalk.hex('#36454F')('select snippet') +
+			'\t ' +
+			chalk.hex('#36454F').bold('c') +
+			' ' +
+			chalk.hex('#36454F')('copy current code snippet') +
+			'\t ' +
+			chalk.hex('#36454F').bold('↑↓') +
+			' ' +
+			chalk.hex('#36454F')('move up/down the list'),
+	);
 	screen.render();
 
 	// Handling list selection
