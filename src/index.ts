@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import chalk from 'chalk';
 import { Command } from 'commander';
 import figlet from 'figlet';
@@ -20,6 +22,10 @@ program
 	.parse(process.argv);
 
 const options = program.opts();
+
+if (!process.argv.slice(2).length) {
+	program.outputHelp();
+}
 
 if (options.save) {
 	const filepath = typeof options.save === 'string' ? options.save : '';
