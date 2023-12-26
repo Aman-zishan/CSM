@@ -2,6 +2,7 @@ import * as blessed from 'neo-blessed';
 import loadSnippets from './get-snippets';
 import highlight from 'cli-highlight';
 import chalk from 'chalk';
+
 // Call to load the snippets.
 export default function listSnippets() {
 	// Create a screen object.
@@ -135,10 +136,26 @@ export default function listSnippets() {
 			const highlightedCode = highlight(selectedSnippet.code, {
 				language: selectedSnippet.language.toLowerCase(),
 				ignoreIllegals: true,
+				theme: {
+					keyword: chalk.hex('#8F00FF'),
+					literal: chalk.magenta,
+					function: chalk.blueBright,
+					string: chalk.greenBright,
+					number: chalk.cyan,
+					comment: chalk.green,
+					params: chalk.yellow,
+				},
 			});
 
 			editor.setValue(highlightedCode);
 			editor.screen.render();
+
+			screen.key(['c'], async function (ch, key) {
+				const clipboardy = (await import('clipboardy')).default;
+				clipboardy.writeSync(selectedSnippet.code);
+				editor.setValue(chalk.green('Copied to clipboard!'));
+				editor.screen.render();
+			});
 		}
 	});
 }

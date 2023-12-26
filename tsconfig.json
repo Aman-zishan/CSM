@@ -2,11 +2,11 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "module": "commonJS",
+    "module": "Node16",
     "strict": true,
     "target": "ES6",
     "sourceMap": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node16"
   }
 }
