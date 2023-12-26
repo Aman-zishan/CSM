@@ -21,7 +21,12 @@ const options = program.opts();
 
 if (options.save) {
 	const filepath = typeof options.save === 'string' ? options.save : '';
-	saveSnippet(filepath);
+	const save_snippet = saveSnippet(filepath);
+	console.log(
+		!save_snippet.includes('Error')
+			? chalk.green(save_snippet)
+			: chalk.red(save_snippet),
+	);
 }
 
 if (options.list) {

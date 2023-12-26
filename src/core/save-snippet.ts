@@ -20,9 +20,7 @@ function getLanguageFromExtension(filePath: string): string {
 
 function saveSnippet(filePath: string): string {
 	try {
-		console.log('saving snippet...');
 		const title = path.basename(filePath, path.extname(filePath)); // Extract the filename without extension
-		console.log('saving snippet...', title);
 		const language = getLanguageFromExtension(filePath);
 		const code = fs.readFileSync(filePath, 'utf8');
 		const snippet: Snippet = { language, code, title };
@@ -40,8 +38,8 @@ function saveSnippet(filePath: string): string {
 
 		snippets.push(snippet);
 		fs.writeFileSync(snippetsFilePath, JSON.stringify(snippets, null, 2));
-		console.log('done');
-		return `Code Snippet saved successfully: ${title}`;
+
+		return `Code Snippet saved successfully!`;
 	} catch (error: any) {
 		console.log(error);
 		return `Error saving snippet: ${error.message}`;
