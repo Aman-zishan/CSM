@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cli-highlight": "^2.1.11",
     "commander": "^11.1.0",
     "figlet": "^1.7.0",
+    "highlight.js": "^11.9.0",
     "neo-blessed": "^0.2.0"
   },
   "devDependencies": {

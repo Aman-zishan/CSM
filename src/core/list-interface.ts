@@ -1,6 +1,6 @@
 import * as blessed from 'neo-blessed';
 import loadSnippets from './get-snippets';
-
+import highlight from 'cli-highlight';
 // Call to load the snippets.
 export default function listSnippets() {
 	// Create a screen object.
@@ -73,7 +73,12 @@ export default function listSnippets() {
 			(snippet: Snippet) => snippet.title === selectedTitle,
 		);
 		if (selectedSnippet) {
-			editor.setValue(selectedSnippet.code);
+			const highlightedCode = highlight(selectedSnippet.code, {
+				language: selectedSnippet.language.toLowerCase(),
+				ignoreIllegals: true,
+			});
+
+			editor.setValue(highlightedCode);
 			editor.screen.render();
 		}
 	});
