@@ -2,7 +2,8 @@
 
 <div align="center">
   
-https://github.com/Aman-zishan/CSM/assets/55238388/15b583e2-26af-4ee5-a8bb-259f8a2ef531
+![csm](https://github.com/Aman-zishan/CSM/assets/55238388/b08503f7-087b-47ae-9cc5-6d4d75350a05)
+
 
 </div>
 
