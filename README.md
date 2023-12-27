@@ -6,13 +6,15 @@ command line interface. Search through the saved code snippets to have a quick l
 
 </br>
 
+
+
+## Text User Interface
+
 <div align="center">
 
 ![csm](https://github.com/Aman-zishan/CSM/assets/55238388/b08503f7-087b-47ae-9cc5-6d4d75350a05)
 
 </div>
-
-## TUI
 
 launch the interface
 
