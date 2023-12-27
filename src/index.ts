@@ -12,7 +12,6 @@ console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
 
 program
 	.version('1.0.0')
-	.name('csm')
 	.description(
 		chalk.green(
 			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal currently supports JavaScript, TypeScript and Python',
