@@ -1,7 +1,7 @@
 {
   "name": "csm",
   "version": "1.0.0",
-  "description": "",
+  "description": "CSM is a CLI tool to manage your code snippets.",
   "main": "dist/index.js",
   "bin": {
     "csm": "./dist/index.js"
@@ -10,8 +10,13 @@
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Aman Zishan <@amanzishan> (https://github.com/Aman-zishan)",
+  "keywords": [
+    "CSM",
+    "CLI tool",
+    "productivity",
+    "Code Snippet Manager"
+  ],
+  "author": "Aman Zishan <aman-zishan> (https://github.com/Aman-zishan)",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",

@@ -1,11 +1,14 @@
-import * as blessed from 'neo-blessed';
 import loadSnippets from './get-snippets';
 import highlight from 'cli-highlight';
 import chalk from 'chalk';
 
+import * as blessed from 'neo-blessed';
+import { deleteSnippet } from './delete-snippets';
+
 // Call to load the snippets.
 export default function listSnippets() {
-	// Create a screen object.
+	let snippets: Snippet[] = loadSnippets();
+	let selectedSnippet: Snippet | undefined;
 	const screen = blessed.screen({
 		smartCSR: true,
 		title: 'Code Snippet Manager',
@@ -83,8 +86,7 @@ export default function listSnippets() {
 		keys: true,
 		inputOnFocus: true,
 	});
-
-	// Append our box to the screen.
+	// Append our boxes to the screen.
 
 	screen.append(titleBar);
 	screen.append(EditorTitleBar);
@@ -101,8 +103,6 @@ export default function listSnippets() {
 	});
 
 	// Load the snippets into the list.
-
-	const snippets = loadSnippets();
 	const titles = snippets.map((snippet: Snippet) => snippet.title);
 	list.setItems(titles);
 	titleBar.setValue(chalk.hex('#36454F').bold('Snippets'));
@@ -118,18 +118,40 @@ export default function listSnippets() {
 			'\t ' +
 			chalk.hex('#36454F').bold('c') +
 			' ' +
-			chalk.hex('#36454F')('copy current code snippet') +
+			chalk.hex('#36454F')('copy') +
+			'\t ' +
+			chalk.hex('#36454F').bold('d') +
+			' ' +
+			chalk.hex('#36454F')('delete') +
 			'\t ' +
 			chalk.hex('#36454F').bold('↑↓') +
 			' ' +
-			chalk.hex('#36454F')('move up/down the list'),
+			chalk.hex('#36454F')('move up/down the list') +
+			'\t ' +
+			chalk.hex('#36454F').bold('/') +
+			' ' +
+			chalk.hex('#36454F')('search'),
 	);
 	screen.render();
+
+	screen.key(['d'], async function (ch, key) {
+		if (!selectedSnippet) return;
+		const delete_snippet = deleteSnippet(selectedSnippet.id);
+		snippets = loadSnippets();
+		list.setItems(snippets.map((snippet: Snippet) => snippet.title));
+		editor.setValue(
+			!delete_snippet.includes('Error')
+				? chalk.green(delete_snippet)
+				: chalk.red(delete_snippet),
+		);
+		screen.render();
+		editor.screen.render();
+	});
 
 	// Handling list selection
 	list.on('select', function (data) {
 		const selectedTitle = data.content;
-		const selectedSnippet = snippets.find(
+		selectedSnippet = snippets.find(
 			(snippet: Snippet) => snippet.title === selectedTitle,
 		);
 		if (selectedSnippet) {
@@ -152,6 +174,7 @@ export default function listSnippets() {
 
 			screen.key(['c'], async function (ch, key) {
 				const clipboardy = (await import('clipboardy')).default;
+				if (!selectedSnippet) return;
 				clipboardy.writeSync(selectedSnippet.code);
 				editor.setValue(chalk.green('Copied to clipboard!'));
 				editor.screen.render();

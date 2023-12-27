@@ -3,7 +3,7 @@ import os from 'os';
 import path from 'path';
 
 // Path to the JSON file in the documents directory
-const snippetsFilePath = path.join(
+export const snippetsFilePath = path.join(
 	os.homedir(),
 	'Documents',
 	'csm_snippets_main.json',
