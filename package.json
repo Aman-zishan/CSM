@@ -1,5 +1,5 @@
 {
-  "name": "csm",
+  "name": "csm-cli",
   "version": "1.0.0",
   "description": "CSM is a CLI tool to manage your code snippets.",
   "main": "dist/index.js",
