@@ -17,10 +17,8 @@ launch the interface
 csm -l
 ```
 
-<div>
 
-<summary>Key Bindings</summary>
-
+### Key Bindings
 <br />
 
 | Action | Key |
@@ -33,7 +31,7 @@ csm -l
 | Go back (exit from search) | <kbd>esc</kbd> |
 | Quit application | <kbd>q</kbd> <kbd>ctrl+c</kbd> |
 
-</div>
+
 
 
 ## Command Line Interface
