@@ -19,7 +19,7 @@ command line interface. Search through the saved code snippets to have a quick l
 launch the interface
 
 ```bash
-csm -l
+csm-kit -l
 ```
 
 
@@ -43,21 +43,21 @@ csm -l
 
 ```bash
 #help command
-csm -h
+csm-kit -h
 
 #save a new snippet
-csm -s <filepath>
+csm-kit -s <filepath>
 
 #example:
 
-csm -s hello.py
+csm-kit -s hello.py
 ```
 
 ## installation
 
 ```bash
 
-npm install -g csm
+npm install -g csm-kit
 ```
 
 
