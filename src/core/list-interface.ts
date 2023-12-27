@@ -97,12 +97,11 @@ export default function listSnippets() {
 	// Focus on the snippet list to allow for navigation.
 	list.focus();
 
-	// Add key event for quitting the program.
+	// Handle quit
 	screen.key(['escape', 'q', 'C-c'], function (ch, key) {
 		return process.exit(0);
 	});
 
-	// Load the snippets into the list.
 	const titles = snippets.map((snippet: Snippet) => snippet.title);
 	list.setItems(titles);
 	titleBar.setValue(chalk.hex('#36454F').bold('Snippets'));
@@ -134,6 +133,7 @@ export default function listSnippets() {
 	);
 	screen.render();
 
+	// handling delete
 	screen.key(['d'], async function (ch, key) {
 		if (!selectedSnippet) return;
 		const delete_snippet = deleteSnippet(selectedSnippet.id);
@@ -144,7 +144,15 @@ export default function listSnippets() {
 				? chalk.green(delete_snippet)
 				: chalk.red(delete_snippet),
 		);
-		screen.render();
+		editor.screen.render();
+	});
+
+	// handling copy to clipboard
+	screen.key(['c'], async function (ch, key) {
+		const clipboardy = (await import('clipboardy')).default;
+		if (!selectedSnippet) return;
+		clipboardy.writeSync(selectedSnippet.code);
+		editor.setValue(chalk.green('Copied to clipboard!'));
 		editor.screen.render();
 	});
 
@@ -171,14 +179,6 @@ export default function listSnippets() {
 
 			editor.setValue(highlightedCode);
 			editor.screen.render();
-
-			screen.key(['c'], async function (ch, key) {
-				const clipboardy = (await import('clipboardy')).default;
-				if (!selectedSnippet) return;
-				clipboardy.writeSync(selectedSnippet.code);
-				editor.setValue(chalk.green('Copied to clipboard!'));
-				editor.screen.render();
-			});
 		}
 	});
 }
