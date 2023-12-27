@@ -1,9 +1,10 @@
 import loadSnippets from './get-snippets';
 import highlight from 'cli-highlight';
+import { supportsLanguage } from 'cli-highlight';
 import chalk from 'chalk';
 
 import * as blessed from 'neo-blessed';
-import { deleteSnippet } from './delete-snippets';
+import { deleteSnippet } from './delete-snippet';
 
 // Call to load the snippets.
 export default function listSnippets() {
@@ -54,7 +55,7 @@ export default function listSnippets() {
 	const list = blessed.list({
 		parent: screen,
 		width: '30%',
-		height: '90%',
+		height: '80%',
 		left: '0',
 		top: '5%',
 		align: 'left',
@@ -70,8 +71,7 @@ export default function listSnippets() {
 	});
 
 	// Create a box for the right panel (code editor).
-	const editor = blessed.textarea({
-		parent: screen,
+	const editor = blessed.box({
 		width: '70%',
 		height: '90%',
 		left: '30%',
@@ -82,10 +82,11 @@ export default function listSnippets() {
 			left: 1,
 			top: 2,
 		},
+		overflow: 'auto',
 		mouse: true,
-		keys: true,
-		inputOnFocus: true,
+		scrollable: true,
 	});
+
 	// Append our boxes to the screen.
 
 	screen.append(titleBar);
@@ -98,8 +99,12 @@ export default function listSnippets() {
 	list.focus();
 
 	// Handle quit
-	screen.key(['escape', 'q', 'C-c'], function (ch, key) {
+	screen.key(['q', 'C-c'], function (ch, key) {
 		return process.exit(0);
+	});
+
+	screen.key(['tab'], function (ch, key) {
+		editor.focus();
 	});
 
 	const titles = snippets.map((snippet: Snippet) => snippet.title);
@@ -113,7 +118,7 @@ export default function listSnippets() {
 			'\t' +
 			chalk.hex('#36454F').bold('⏎') +
 			' ' +
-			chalk.hex('#36454F')('select snippet') +
+			chalk.hex('#36454F')('select') +
 			'\t ' +
 			chalk.hex('#36454F').bold('c') +
 			' ' +
@@ -129,17 +134,37 @@ export default function listSnippets() {
 			'\t ' +
 			chalk.hex('#36454F').bold('/') +
 			' ' +
-			chalk.hex('#36454F')('search'),
+			chalk.hex('#36454F')('search') +
+			'\t ' +
+			chalk.hex('#36454F').bold('tab') +
+			' ' +
+			chalk.hex('#36454F')('focus editor'),
 	);
+
 	screen.render();
 
+	const searchBox = blessed.textarea({
+		parent: screen,
+		fg: 'white',
+		bottom: 2,
+		left: 0,
+		width: '30%',
+		height: '10%',
+		padding: {
+			left: 1,
+		},
+		mouse: true,
+		keys: true,
+		inputOnFocus: true,
+	});
+
 	// handling delete
-	screen.key(['d'], async function (ch, key) {
+	screen.key(['d', 'delete'], async function (ch, key) {
 		if (!selectedSnippet) return;
 		const delete_snippet = deleteSnippet(selectedSnippet.id);
 		snippets = loadSnippets();
 		list.setItems(snippets.map((snippet: Snippet) => snippet.title));
-		editor.setValue(
+		editor.setContent(
 			!delete_snippet.includes('Error')
 				? chalk.green(delete_snippet)
 				: chalk.red(delete_snippet),
@@ -147,24 +172,56 @@ export default function listSnippets() {
 		editor.screen.render();
 	});
 
+	// clear search
+	screen.key(['escape'], async function (ch, key) {
+		snippets = loadSnippets();
+		list.setItems(snippets.map((snippet: Snippet) => snippet.title));
+		searchBox.setValue('');
+		list.screen.render();
+	});
+
 	// handling copy to clipboard
 	screen.key(['c'], async function (ch, key) {
 		const clipboardy = (await import('clipboardy')).default;
 		if (!selectedSnippet) return;
 		clipboardy.writeSync(selectedSnippet.code);
-		editor.setValue(chalk.green('Copied to clipboard!'));
+		editor.setContent(chalk.green('Copied to clipboard!'));
 		editor.screen.render();
+	});
+
+	screen.key(['/', 's'], function (ch, key) {
+		// implement search functionality
+
+		searchBox.focus();
+
+		searchBox.on('keypress', function (ch, key) {
+			if (key.name === 'enter') {
+				const searchResults = snippets.filter((snippet: Snippet) =>
+					snippet.title
+						.toLowerCase()
+						.includes(searchBox.getValue().toLowerCase()),
+				);
+				list.setItems(
+					searchResults.map((snippet: Snippet) => snippet.title),
+				);
+				list.screen.render();
+			}
+		});
 	});
 
 	// Handling list selection
 	list.on('select', function (data) {
-		const selectedTitle = data.content;
 		selectedSnippet = snippets.find(
-			(snippet: Snippet) => snippet.title === selectedTitle,
+			(snippet: Snippet) => snippet.title === data.content,
 		);
 		if (selectedSnippet) {
+			const supportLanguge = supportsLanguage(
+				selectedSnippet.language.toLowerCase(),
+			)
+				? selectedSnippet.language.toLowerCase()
+				: 'txt';
 			const highlightedCode = highlight(selectedSnippet.code, {
-				language: selectedSnippet.language.toLowerCase(),
+				language: supportLanguge,
 				ignoreIllegals: true,
 				theme: {
 					keyword: chalk.hex('#8F00FF'),
@@ -177,7 +234,7 @@ export default function listSnippets() {
 				},
 			});
 
-			editor.setValue(highlightedCode);
+			editor.setContent(highlightedCode);
 			editor.screen.render();
 		}
 	});
