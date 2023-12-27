@@ -1,4 +1,6 @@
-# CSM
+
+![csm logo](https://github.com/Aman-zishan/CSM/assets/55238388/368576eb-73e4-455e-baba-3e9ac39a1bde)
+
 
 CSM is a CLI tool build in typescript to store your code snippets. Create and access your code snippets with the
 command line interface. Search through the saved code snippets to have a quick look.
