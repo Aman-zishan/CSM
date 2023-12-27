@@ -8,21 +8,21 @@ interface Snippet {
 	title: string;
 }
 
-function getLanguageFromExtension(filePath: string): string {
-	const extension = path.extname(filePath).toLowerCase();
-	const languageMap: { [key: string]: string } = {
-		'.js': 'JavaScript',
-		'.ts': 'TypeScript',
-		'.py': 'Python',
-		// Add more mappings as needed
-	};
-	return languageMap[extension] || 'Unknown';
-}
+// function getLanguageFromExtension(filePath: string): string {
+// 	const extension = path.extname(filePath).toLowerCase();
+// 	const languageMap: { [key: string]: string } = {
+// 		'.js': 'JavaScript',
+// 		'.ts': 'TypeScript',
+// 		'.py': 'Python',
+// 		// Add more mappings as needed
+// 	};
+// 	return languageMap[extension] || 'Unknown';
+// }
 
 function saveSnippet(filePath: string): string {
 	try {
 		const title = path.basename(filePath, path.extname(filePath)); // Extract the filename without extension
-		const language = getLanguageFromExtension(filePath);
+		const language = path.extname(filePath).toLowerCase().substring(1);
 		const code = fs.readFileSync(filePath, 'utf8');
 
 		const snippetsFilePath = path.join(
