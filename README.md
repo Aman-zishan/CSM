@@ -28,7 +28,7 @@ csm -l
 | Copy selected snippet to clipboard | <kbd>c</kbd> |
 | Delete selected snippet | <kbd>d</kbd> |
 | Search for snippets | <kbd>/</kbd> |
-| move up/down the list | <kbd>↑↓</kbd> |
+| move up/down the list | <kbd>↑</kbd> <kbd>↓</kbd> |
 | select snippet | <kbd>enter</kbd> |
 | Go back (exit from search) | <kbd>esc</kbd> |
 | Quit application | <kbd>q</kbd> <kbd>ctrl+c</kbd> |
