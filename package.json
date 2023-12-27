@@ -17,6 +17,8 @@
     "Code Snippet Manager"
   ],
   "author": "Aman Zishan <aman-zishan> (https://github.com/Aman-zishan)",
+  "repository": "https://github.com/Aman-zishan/CSM.git",
+  "homepage": "https://github.com/Aman-zishan/CSM.git#readme",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",

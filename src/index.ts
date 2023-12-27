@@ -18,8 +18,8 @@ program
 			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal currently supports JavaScript, TypeScript and Python',
 		),
 	)
-	.option('-s, --save <snippet-title>.ts | py | js', 'Save a code snippet')
-	.option('-l, --list', 'List all code snippets')
+	.option('-s, --save <filepath>', 'Save a code snippet')
+	.option('-l, --list', 'Open TUI')
 	.parse(process.argv);
 
 const options = program.opts();
