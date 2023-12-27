@@ -136,9 +136,9 @@ export default function listSnippets() {
 			' ' +
 			chalk.hex('#36454F')('search') +
 			'\t ' +
-			chalk.hex('#36454F').bold('tab') +
+			chalk.hex('#36454F').bold('esc') +
 			' ' +
-			chalk.hex('#36454F')('focus editor'),
+			chalk.hex('#36454F')('go back'),
 	);
 
 	screen.render();

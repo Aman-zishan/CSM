@@ -21,9 +21,13 @@ interface Snippet {
 
 function saveSnippet(filePath: string): string {
 	try {
-		const title = path.basename(filePath, path.extname(filePath)); // Extract the filename without extension
+		let title = path.basename(filePath, path.extname(filePath)); // Extract the filename without extension
 		const language = path.extname(filePath).toLowerCase().substring(1);
 		const code = fs.readFileSync(filePath, 'utf8');
+
+		if (title.includes('_')) {
+			title = title.split('_').join(' ');
+		}
 
 		const snippetsFilePath = path.join(
 			process.env.HOME || process.env.USERPROFILE!,
