@@ -8,6 +8,7 @@ import { saveSnippet } from './core/save-snippet';
 
 const program = new Command();
 
+// CSM logo in CLI
 console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
 
 program
