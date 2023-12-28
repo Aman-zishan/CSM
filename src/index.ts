@@ -11,10 +11,10 @@ const program = new Command();
 console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
 
 program
-	.version('1.0.0')
+	.version('1.3.0')
 	.description(
 		chalk.green(
-			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal currently supports JavaScript, TypeScript and Python',
+			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal',
 		),
 	)
 	.option('-s, --save <filepath>', 'Save a code snippet')
