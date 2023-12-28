@@ -83,6 +83,12 @@ csm-kit -o <snippet_title>
 
 # example
 csm-kit -o binary_search_in_py
+
+# delete a snippet
+csm-kit -d <snippet_ID>
+
+# example
+csm-kit -d 2
 ```
 
 
