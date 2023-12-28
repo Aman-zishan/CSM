@@ -33,6 +33,7 @@
     "@types/blessed": "^0.1.25",
     "@types/figlet": "^1.5.8",
     "@types/node": "^20.10.5",
+    "semantic-release": "^22.0.12",
     "typescript": "^5.3.3"
   }
 }
