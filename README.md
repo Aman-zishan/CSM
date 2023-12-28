@@ -63,15 +63,26 @@ csm-kit -l
 ## Command Line Interface
 
 ```bash
-#help command
+# help command
 csm-kit -h
 
-#save a new snippet
+# save a new snippet
 csm-kit -s <filepath>
 
-#example:
+# example:
 
 csm-kit -s hello.py
+
+# list all snippets
+csm-kit -ls
+
+# get a snippet by name
+csm-kit -o <snippet_title>
+
+## format for snippet name : binary_search_in_py should be seperated by underscore like this
+
+# example
+csm-kit -o binary_search_in_py
 ```
 
 
