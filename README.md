@@ -1,10 +1,31 @@
 
 ![csm logo](https://github.com/Aman-zishan/CSM/assets/55238388/18961d71-e87d-4e53-939b-2238c60a09d1)
 
+<div align="center">
+
+
+  ![CLI](https://github.com/aleen42/badges/blob/master/src/cli.svg)
+  ![npm](https://github.com/aleen42/badges/blob/master/src/npm.svg)
+  ![node](https://github.com/aleen42/badges/blob/master/src/node.svg)
+  ![typescript](https://github.com/aleen42/badges/blob/master/src/typescript.svg)
+  ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Aman-zishan/CSM/publish.yml)
+  ![npm](https://img.shields.io/npm/dw/csm-kit)
+  ![GitHub License](https://img.shields.io/github/license/Aman-zishan/csm)
+  ![npm](https://img.shields.io/npm/v/csm-kit)
+
+</div>
+
 CSM is a CLI tool build in typescript to store your code snippets. Create and access your code snippets with the
 command line interface. Search through the saved code snippets to have a quick look.
 
 </br>
+
+## installation
+
+```bash
+
+npm install -g csm-kit
+```
 
 
 
@@ -53,12 +74,6 @@ csm-kit -s <filepath>
 csm-kit -s hello.py
 ```
 
-## installation
-
-```bash
-
-npm install -g csm-kit
-```
 
 
 
