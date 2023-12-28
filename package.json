@@ -30,6 +30,7 @@
     "neo-blessed": "^0.2.0"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
     "@types/blessed": "^0.1.25",
     "@types/figlet": "^1.5.8",
     "@types/node": "^20.10.5",
