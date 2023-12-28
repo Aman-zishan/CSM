@@ -7,14 +7,16 @@ import listSnippets from './core/list-interface';
 import { saveSnippet } from './core/save-snippet';
 import loadSnippets from './core/get-snippets';
 import highlight, { supportsLanguage } from 'cli-highlight';
+import generateLogo from './utils/generate-logo';
+import listAll from './CLI/list-all';
+import { deleteSnippet } from './core/delete-snippet';
 
 const program = new Command();
 
-// CSM logo in CLI
-console.log(chalk.red(figlet.textSync('CSM', '3D Diagonal')));
-
+const version = require('../package.json').version;
+generateLogo();
 program
-	.version('1.3.0')
+	.version(version)
 	.description(
 		chalk.green(
 			'A CLI Code Snippet Manager tool for managing code snippets directly from your terminal',
@@ -23,7 +25,17 @@ program
 	.option('-s, --save <filepath>', 'Save a code snippet')
 	.option('-ls, --list-all', 'List all snippets')
 	.option('-o, --output <snippet_title>', 'Output a particular snippet')
+	.option('-d, --delete <snippet_ID>', 'Delete snippet by ID')
 	.option('-l, --list', 'Open TUI')
+	.addHelpText(
+		'after',
+		`
+Example:
+  $ csm-kit -s hello.py
+  $ csm-kit -ls
+  $ csm-kit -o hello.py
+`,
+	)
 	.parse(process.argv);
 
 const options = program.opts();
@@ -47,9 +59,7 @@ if (options.list) {
 }
 
 if (options.listAll) {
-	const snippets = loadSnippets();
-	const titles = snippets.map((snippet: Snippet) => snippet.title);
-	titles.forEach((title: string) => console.log(chalk.green(title)));
+	listAll();
 }
 
 if (options.output) {
@@ -80,4 +90,10 @@ if (options.output) {
 		},
 	});
 	console.log(highlightedCode);
+}
+
+if (options.delete) {
+	const snippetId =
+		typeof options.delete === 'string' ? parseInt(options.delete) : 0;
+	console.log(deleteSnippet(snippetId));
 }

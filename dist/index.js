@@ -29,21 +29,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const commander_1 = require("commander");
-const figlet_1 = __importDefault(require("figlet"));
 const list_interface_1 = __importDefault(require("./core/list-interface"));
 const save_snippet_1 = require("./core/save-snippet");
 const get_snippets_1 = __importDefault(require("./core/get-snippets"));
 const cli_highlight_1 = __importStar(require("cli-highlight"));
+const generate_logo_1 = __importDefault(require("./utils/generate-logo"));
+const list_all_1 = __importDefault(require("./CLI/list-all"));
+const delete_snippet_1 = require("./core/delete-snippet");
 const program = new commander_1.Command();
-// CSM logo in CLI
-console.log(chalk_1.default.red(figlet_1.default.textSync('CSM', '3D Diagonal')));
+const version = require('../package.json').version;
+(0, generate_logo_1.default)();
 program
-    .version('1.3.0')
+    .version(version)
     .description(chalk_1.default.green('A CLI Code Snippet Manager tool for managing code snippets directly from your terminal'))
     .option('-s, --save <filepath>', 'Save a code snippet')
     .option('-ls, --list-all', 'List all snippets')
     .option('-o, --output <snippet_title>', 'Output a particular snippet')
+    .option('-d, --delete <snippet_ID>', 'Delete snippet by ID')
     .option('-l, --list', 'Open TUI')
+    .addHelpText('after', `
+Example:
+  $ csm-kit -s hello.py
+  $ csm-kit -ls
+  $ csm-kit -o hello.py
+`)
     .parse(process.argv);
 const options = program.opts();
 if (!process.argv.slice(2).length) {
@@ -60,9 +69,7 @@ if (options.list) {
     (0, list_interface_1.default)();
 }
 if (options.listAll) {
-    const snippets = (0, get_snippets_1.default)();
-    const titles = snippets.map((snippet) => snippet.title);
-    titles.forEach((title) => console.log(chalk_1.default.green(title)));
+    (0, list_all_1.default)();
 }
 if (options.output) {
     const snippets = (0, get_snippets_1.default)();
@@ -88,5 +95,9 @@ if (options.output) {
         },
     });
     console.log(highlightedCode);
+}
+if (options.delete) {
+    const snippetId = typeof options.delete === 'string' ? parseInt(options.delete) : 0;
+    console.log((0, delete_snippet_1.deleteSnippet)(snippetId));
 }
 //# sourceMappingURL=index.js.map
