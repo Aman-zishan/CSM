@@ -33,7 +33,8 @@ program
 Example:
   $ csm-kit -s hello.py
   $ csm-kit -ls
-  $ csm-kit -o hello.py
+  $ csm-kit -o hello_py
+  $ csm-kit -d 1
 `,
 	)
 	.parse(process.argv);
